@@ -1,0 +1,41 @@
+> imod1 <- lm(Score ~ Calories + Type + Fat, data = Pizza_ratings)
+> summary(imod1)
+
+
+> plot(imod1$fitted.values, imod1$residuals, xlab = 'Fitted values', ylab = 'Residuals')
+> abline(0, 0)
+
+> std.res <- rstandard(imod1)
+> lev <- hatvalues(imod1)
+> par(mfrow = c(1,2))
+> hist(std.res, xlab = 'Standardized residuals', main = "")
+> hist(lev, xlab = 'Leverages', main = "")
+
+> cookd <- cooks.distance(imod1)
+> dffit <- dffits(imod1)
+> par(mfrow = c(1,2))
+> boxplot(cookd, xlab = "Cook's distance")
+> boxplot(dffit, xlab = 'DFFITS')
+
+
+> Pizza_ratings[which.max(cookd), c(2, 4, 5, 6)]
+
+
+> dffit.cut <- 2*sqrt(length(imod1$coefficients)/ (dim(Pizza_ratings)[1] -
+length(imod1$coefficients)))
+> which(abs(dffit) > dffit.cut)
+
+> imod2 <- lm(Score ~ Calories + Type + Fat, data = Pizza_ratings2)
+> summary(imod2)
+
+
+> par(mfrow = c(1, 2))
+> plot(imod2$fitted.values, imod2$residuals, xlab = 'Fitted values', ylab = 'Residuals')
+> abline(0, 0)
+> hist(imod2$residuals, main = "Histogram of residuals", xlab = 'Residuals')
+
+
+vif <- lm(Score ~ Calories + Type + Fat, data = Pizza_ratings2
+
+> imod3 <- lm(Score ~ Calories + Type + Calories*Type, data = Pizza_ratings)
+> summary(imod3)
